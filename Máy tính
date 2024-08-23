@@ -1,0 +1,103 @@
+# coding: utf-8
+# Your code here!
+import tkinter as tk
+
+class Calculator:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("Calculator")
+
+        self.expression = ""
+        self.input_text = tk.StringVar()
+
+        # Entry field để hiển thị biểu thức
+        self.input_frame = tk.Frame(self.root)
+        self.input_frame.pack()
+
+        self.input_field = tk.Entry(self.input_frame, textvariable=self.input_text, font=('Arial', 18), bd=10, insertwidth=4, width=14, borderwidth=4)
+        self.input_field.grid(row=0, column=0)
+        self.input_field.pack(ipady=10)  # `ipady` dùng để tăng chiều cao của Entry widget
+
+        # Frame chứa các nút
+        self.buttons_frame = tk.Frame(self.root)
+        self.buttons_frame.pack()
+
+        # First row
+        self.clear_button = tk.Button(self.buttons_frame, text='C', fg='black', width=32, height=3, bd=0, bg='#eee', cursor='hand2', command=self.clear)
+        self.clear_button.grid(row=0, column=0, columnspan=3)
+
+        self.divide_button = tk.Button(self.buttons_frame, text='/', fg='black', width=10, height=3, bd=0, bg='#eee', cursor='hand2', command=lambda: self.click("/"))
+        self.divide_button.grid(row=0, column=3)
+
+        # Second row
+        self.seven_button = tk.Button(self.buttons_frame, text='7', fg='black', width=10, height=3, bd=0, bg='#fff', cursor='hand2', command=lambda: self.click(7))
+        self.seven_button.grid(row=1, column=0)
+
+        self.eight_button = tk.Button(self.buttons_frame, text='8', fg='black', width=10, height=3, bd=0, bg='#fff', cursor='hand2', command=lambda: self.click(8))
+        self.eight_button.grid(row=1, column=1)
+
+        self.nine_button = tk.Button(self.buttons_frame, text='9', fg='black', width=10, height=3, bd=0, bg='#fff', cursor='hand2', command=lambda: self.click(9))
+        self.nine_button.grid(row=1, column=2)
+
+        self.multiply_button = tk.Button(self.buttons_frame, text='*', fg='black', width=10, height=3, bd=0, bg='#eee', cursor='hand2', command=lambda: self.click("*"))
+        self.multiply_button.grid(row=1, column=3)
+
+        # Third row
+        self.four_button = tk.Button(self.buttons_frame, text='4', fg='black', width=10, height=3, bd=0, bg='#fff', cursor='hand2', command=lambda: self.click(4))
+        self.four_button.grid(row=2, column=0)
+
+        self.five_button = tk.Button(self.buttons_frame, text='5', fg='black', width=10, height=3, bd=0, bg='#fff', cursor='hand2', command=lambda: self.click(5))
+        self.five_button.grid(row=2, column=1)
+
+        self.six_button = tk.Button(self.buttons_frame, text='6', fg='black', width=10, height=3, bd=0, bg='#fff', cursor='hand2', command=lambda: self.click(6))
+        self.six_button.grid(row=2, column=2)
+
+        self.subtract_button = tk.Button(self.buttons_frame, text='-', fg='black', width=10, height=3, bd=0, bg='#eee', cursor='hand2', command=lambda: self.click("-"))
+        self.subtract_button.grid(row=2, column=3)
+
+        # Fourth row
+        self.one_button = tk.Button(self.buttons_frame, text='1', fg='black', width=10, height=3, bd=0, bg='#fff', cursor='hand2', command=lambda: self.click(1))
+        self.one_button.grid(row=3, column=0)
+
+        self.two_button = tk.Button(self.buttons_frame, text='2', fg='black', width=10, height=3, bd=0, bg='#fff', cursor='hand2', command=lambda: self.click(2))
+        self.two_button.grid(row=3, column=1)
+
+        self.three_button = tk.Button(self.buttons_frame, text='3', fg='black', width=10, height=3, bd=0, bg='#fff', cursor='hand2', command=lambda: self.click(3))
+        self.three_button.grid(row=3, column=2)
+
+        self.add_button = tk.Button(self.buttons_frame, text='+', fg='black', width=10, height=3, bd=0, bg='#eee', cursor='hand2', command=lambda: self.click("+"))
+        self.add_button.grid(row=3, column=3)
+
+        # Fifth row
+        self.zero_button = tk.Button(self.buttons_frame, text='0', fg='black', width=21, height=3, bd=0, bg='#fff', cursor='hand2', command=lambda: self.click(0))
+        self.zero_button.grid(row=4, column=0, columnspan=2)
+
+        self.decimal_button = tk.Button(self.buttons_frame, text='.', fg='black', width=10, height=3, bd=0, bg='#eee', cursor='hand2', command=lambda: self.click("."))
+        self.decimal_button.grid(row=4, column=2)
+
+        self.equals_button = tk.Button(self.buttons_frame, text='=', fg='black', width=10, height=3, bd=0, bg='#eee', cursor='hand2', command=self.equals)
+        self.equals_button.grid(row=4, column=3)
+
+    def click(self, item):
+        self.expression = self.expression + str(item)
+        self.input_text.set(self.expression)
+
+    def clear(self):
+        self.expression = ""
+        self.input_text.set("")
+
+    def equals(self):
+        try:
+            result = str(eval(self.expression))  # tính toán biểu thức
+            self.input_text.set(result)  # hiển thị kết quả
+            self.expression = ""  # reset biểu thức sau khi hiển thị kết quả
+        except Exception as e:
+            self.input_text.set("error")
+            self.expression = ""
+
+# Tạo cửa sổ Tkinter
+root = tk.Tk()
+root.geometry("312x324")
+app = Calculator(root)
+root.mainloop()
+
