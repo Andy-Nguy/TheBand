@@ -1,0 +1,26 @@
+# coding: utf-8
+# Your code here!
+import cv2
+import numpy as np
+
+# Tạo một ảnh mẫu 5x5 để thử nghiệm
+image = np.array([[10, 10, 10, 10, 10],
+                  [10, 80, 80, 80, 10],
+                  [10, 80, 10, 80, 10],
+                  [10, 80, 80, 80, 10],
+                  [10, 10, 10, 10, 10]], dtype=np.uint8)
+
+# Áp dụng mean filter với kernel 3x3
+filtered_image = cv2.blur(image, (3, 3))
+filtered_iamge1=cv2.medianBlur(image, 3)
+
+# In ảnh gốc
+print("Ảnh gốc:")
+print(image)
+
+# In ảnh sau khi lọc trung bình
+print("\nẢnh sau khi lọc trung bình:")
+print(filtered_image)
+print("\nẢnh sau khi lọc trung bình")
+print(filtered_iamge1)
+
